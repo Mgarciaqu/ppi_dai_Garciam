@@ -58,4 +58,4 @@ Desde hace tiempo, me he dedicado a comprar y revender teléfonos celulares a tr
   
 
  **Estudiante de Ingeniería de sistemas de  la Universidad Nacional de Colombia**
- [<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png" width="50" height="50">](https://github.com/mgarciaqu@unal.edu.co)      [<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/1200px-Gmail_icon_%282020%29.svg.png" width="50" height="50">](mailto:maicolgarciaquincos@gmail.com)
+ [<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png" width="50" height="50">](https://github.com/mgarciaqu)      [<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/1200px-Gmail_icon_%282020%29.svg.png" width="50" height="50">](mailto:maicolgarciaquincos@gmail.com)
