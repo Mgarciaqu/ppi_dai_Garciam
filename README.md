@@ -32,5 +32,6 @@ La Tienda de Celulares es una plataforma en línea donde los usuarios pueden exp
 
   
 
-[![WhatsApp](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/800px-WhatsApp.svg.png)](https://wa.me/+573204504857)
+[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/800px-WhatsApp.svg.png" width="50" height="50">](https://wa.me/+573204504857)
+
 
