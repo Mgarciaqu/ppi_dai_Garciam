@@ -16,7 +16,7 @@ La Tienda de Celulares es una plataforma en línea donde los usuarios pueden exp
 Desde hace tiempo, me he dedicado a comprar y revender teléfonos celulares a través de Facebook y WhatsApp. Sin embargo, la gestión constante de información sobre los productos disponibles, sus características y precios mínimos ha sido un desafío. Para abordar esto, estoy creando una página web que centralizará y organizará esta información, mejorando la experiencia del usuario, ahorrando tiempo y generando mayor confianza entre los clientes.
   
 
-## Características de MicaCel
+## Características de Celuya!
 
   
 
