@@ -30,3 +30,10 @@ def cart(request):
 def price_filter(min_price, max_price):
     prices = np.array([product.price for product in Product.objects.all()])
     return products[(prices >= min_price) & (prices <= max_price)]
+
+def about_view(request):
+    return render(request, 'about.html', {
+        'creator_name': 'Nombre del Creador',
+        'creator_email': 'email@dominio.com',
+        'description': 'Esta aplicación fue creada para...'
+    })
