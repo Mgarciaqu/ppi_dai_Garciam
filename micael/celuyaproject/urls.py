@@ -18,3 +18,7 @@ urlpatterns = [
     path('privacy-policy/', views.privacy_policy_view, name='privacy_policy'),
 ]
 
+urlpatterns = [
+    # Otras rutas existentes...
+    path('register/', views.register_view, name='register'),
+]
