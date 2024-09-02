@@ -7,6 +7,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 import geopandas as gpd
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 
 def index(request):
     return render(request, 'index.html')
@@ -41,3 +43,12 @@ def about_view(request):
 def privacy_policy_view(request):
     return render(request, 'privacy_policy.html')
 
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
