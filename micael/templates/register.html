@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuario</title>
-</head>
-<body>
-    <h1>Registro de Usuario</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrar</button>
-    </form>
-</body>
-</html>
+<h2>Registro de Usuario</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label>
+        <input type="checkbox" name="accept_privacy_policy" required> He leído y acepto la <a href="{% url 'privacy_policy' %}">política de privacidad</a>.
+    </label>
+    <button type="submit">Registrarse</button>
+</form>
