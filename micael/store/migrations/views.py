@@ -37,3 +37,7 @@ def about_view(request):
         'creator_email': 'email@dominio.com',
         'description': 'Esta aplicación fue creada para...'
     })
+
+def privacy_policy_view(request):
+    return render(request, 'privacy_policy.html')
+
