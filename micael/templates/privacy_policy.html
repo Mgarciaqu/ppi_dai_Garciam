@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad</title>
+</head>
+<body>
+    <h1>Política de Tratamiento de Datos Personales y Privacidad</h1>
+    <p>Esta política describe cómo se manejan sus datos...</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="checkbox" id="accept_policy" name="accept_policy">
+        <label for="accept_policy">He leído y acepto la política de privacidad</label>
+        <button type="submit">Aceptar</button>
+    </form>
+</body>
+</html>
