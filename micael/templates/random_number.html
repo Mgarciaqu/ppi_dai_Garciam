@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Números Aleatorios</title>
+</head>
+<body>
+    <h1>Generador de Números Aleatorios</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="min">Mínimo:</label>
+        <input type="text" id="min" name="min">
+        <label for="max">Máximo:</label>
+        <input type="text" id="max" name="max">
+        <button type="submit">Generar</button>
+    </form>
+    {% if result %}
+    <p>Número aleatorio generado: {{ result }}</p>
+    {% endif %}
+</body>
+</html>
