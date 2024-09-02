@@ -12,3 +12,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
 ]
+
+urlpatterns = [
+    # Otras rutas existentes...
+    path('privacy-policy/', views.privacy_policy_view, name='privacy_policy'),
+]
+
