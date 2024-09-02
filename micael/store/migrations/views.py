@@ -1,123 +1,102 @@
-import random 
-from django.shortcuts import render, get_object_or_404
-from .models import Product
-from .forms import UserRegistrationForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from .forms import RegistroForm
+from .models import ActividadUsuario
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy.stats import linregress
+from scipy.integrate import quad
 import geopandas as gpd
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from django.shortcuts import render
+from io import BytesIO
+import base64
 
-# Vista principal
-def index(request):
-    return render(request, 'index.html')
-
-# Lista de productos
-def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'product_list.html', {'products': products})
-
-# Detalle de producto
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    return render(request, 'product_detail.html', {'product': product})
-
-# Perfil del usuario (requiere login)
-@login_required
-def user_profile(request):
-    return render(request, 'user_profile.html')
-
-# Carrito de compras (requiere login)
-@login_required
-def cart(request):
-    return render(request, 'cart.html')
-
-# Filtro de precios usando NumPy
-def price_filter(min_price, max_price):
-    prices = np.array([product.price for product in Product.objects.all()])
-    filtered_products = Product.objects.filter(price__gte=min_price, price__lte=max_price)
-    return filtered_products
-
-# Información sobre el creador de la aplicación
-def about_view(request):
-    return render(request, 'about.html', {
-        'creator_name': 'Nombre del Creador',
-        'creator_email': 'email@dominio.com',
-        'description': 'Esta aplicación fue creada para...'
-    })
-
-# Política de privacidad
-def privacy_policy_view(request):
-    return render(request, 'privacy_policy.html')
-
-# Registro de usuarios
-def register_view(request):
+def registro(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistroForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            login(request, user)
+            registrar_actividad(user, "Registro de nuevo usuario")
+            return redirect('inicio')
     else:
-        form = UserCreationForm()
+        form = RegistroForm()
     return render(request, 'register.html', {'form': form})
 
-# Conversor de moneda
-def currency_converter_view(request):
+@login_required
+def cambiar_contrasena(request):
     if request.method == 'POST':
-        amount = float(request.POST.get('amount', 0))
-        conversion_rate = 0.85  # Ejemplo: 1 USD = 0.85 EUR
-        result = amount * conversion_rate
-        return render(request, 'currency_converter.html', {'result': result})
-    return render(request, 'currency_converter.html')
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            registrar_actividad(user, "Cambio de contraseña")
+            return redirect('perfil')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'cambiar_contrasena.html', {'form': form})
 
-# Generador de número aleatorio
-def random_number_view(request):
-    if request.method == 'POST':
-        min_value = int(request.POST.get('min', 0))
-        max_value = int(request.POST.get('max', 100))
-        result = random.randint(min_value, max_value)
-        return render(request, 'random_number.html', {'result': result})
-    return render(request, 'random_number.html')
+def registrar_actividad(user, accion):
+    actividad = ActividadUsuario(user=user, accion=accion)
+    actividad.save()
 
-# Consulta de clima (datos fijos)
-def weather_view(request):
-    weather_data = {
-        'city': 'Bogotá',
-        'temperature': 18,
-        'condition': 'Nublado'
-    }
-    return render(request, 'weather.html', {'weather': weather_data})
+def vista_publica_1(request):
+    return render(request, 'publica_1.html')
 
-# Funcionalidades básicas sin registro
-def basic_functionality_1(request):
-    # Lógica de la primera funcionalidad básica
-    return render(request, 'basic_functionality_1.html')
+def vista_publica_2(request):
+    return render(request, 'publica_2.html')
 
-def basic_functionality_2(request):
-    # Lógica de la segunda funcionalidad básica
-    return render(request, 'basic_functionality_2.html')
-
-def basic_functionality_3(request):
-    # Lógica de la tercera funcionalidad básica
-    return render(request, 'basic_functionality_3.html')
-
-# Funcionalidades avanzadas con registro
-@login_required
-def advanced_functionality_1(request):
-    # Lógica de la primera funcionalidad avanzada
-    return render(request, 'advanced_functionality_1.html')
+def vista_publica_3(request):
+    return render(request, 'publica_3.html')
 
 @login_required
-def advanced_functionality_2(request):
-    # Lógica de la segunda funcionalidad avanzada
-    return render(request, 'advanced_functionality_2.html')
+def vista_avanzada_1(request):
+    return render(request, 'avanzada_1.html')
 
 @login_required
-def advanced_functionality_3(request):
-    # Lógica de la tercera funcionalidad avanzada
-    return render(request, 'advanced_functionality_3.html')
+def vista_avanzada_2(request):
+    return render(request, 'avanzada_2.html')
 
+@login_required
+def vista_avanzada_3(request):
+    return render(request, 'avanzada_3.html')
+
+def numpy_view(request):
+    arreglo = np.array([1, 2, 3])
+    suma = np.sum(arreglo)
+    registrar_actividad(request.user, "Análisis con NumPy")
+    return render(request, 'numpy_analysis.html', {'suma': suma})
+
+def pandas_view(request):
+    df = pd.read_csv('ruta/al/archivo.csv')
+    primeros = df.head()
+    registrar_actividad(request.user, "Análisis con Pandas")
+    return render(request, 'pandas_analysis.html', {'primeros': primeros.to_html()})
+
+def matplotlib_view(request):
+    plt.figure(figsize=(5, 5))
+    plt.plot([1, 2, 3], [4, 5, 6])
+    buf = BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    registrar_actividad(request.user, "Gráfico con Matplotlib")
+    return render(request, 'matplotlib_plot.html', {'image_base64': image_base64})
+
+def scipy_view(request):
+    resultado, error = quad(lambda x: x**2, 0, 1)
+    registrar_actividad(request.user, "Cálculo con SciPy")
+    return render(request, 'scipy_analysis.html', {'resultado': resultado})
+
+def geopandas_view(request):
+    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    world_plot = world.plot()
+    buf = BytesIO()
+    world_plot.figure.savefig(buf, format='png')
+    buf.seek(0)
+    image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    registrar_actividad(request.user, "Mapa con GeoPandas")
+    return render(request, 'geopandas_map.html', {'image_base64': image_base64})
